@@ -1,0 +1,75 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp2
+{
+    public struct Alfabe
+    {
+        public string harfler;
+    }
+    class KrediKarti
+    {
+        public string krediKartiNo;
+        public int kod1 ,kod2, kod3, kod4, kod5;
+        public int kontrol;
+        public int toplam;
+        public int tek = 0;
+        public int cift = 0;
+        public string harf1, harf2, harf3, harf4, harf5;
+        public string sonuc;
+        public KrediKarti(Alfabe alfabe, string krediKarti)
+        {
+            this.krediKartiNo = krediKarti;
+            for (int i = 0; i < krediKarti.Length; i++)
+            {
+                if (i % 2 == 1)
+                {
+                    tek += int.Parse(Convert.ToString(krediKarti[i]));
+                }
+                if (i % 2 == 0)
+                {
+                    kontrol = int.Parse(Convert.ToString(krediKarti[i])) * 2;
+                while (kontrol > 0)
+                {
+                    toplam += kontrol % 10;
+                    kontrol = kontrol / 10;
+                    cift = toplam;
+                }
+                }
+            }
+            kod1 = tek % 26;
+            kod2 = cift % 26;
+            kod3 = (tek + cift) % 26;
+            kod4 = (tek - cift) % 26;
+            kod5 = (tek * cift) % 26;
+            harf1 = Convert.ToString(alfabe.harfler[kod1 - 1]);
+            harf2 = Convert.ToString(alfabe.harfler[kod2 - 1]);
+            harf3 = Convert.ToString(alfabe.harfler[kod3 - 1]);
+            harf4 = Convert.ToString(alfabe.harfler[kod4 - 1]);
+            harf5 = Convert.ToString(alfabe.harfler[kod5 - 1]);
+            Console.Write("Kod: ");
+            sonuc = string.Concat(harf1, harf2, harf3, harf4, harf5);
+            Console.WriteLine(sonuc);
+        }
+    }
+    class Program
+    {
+        public static void kart() 
+        {
+            string krediKarti;
+            Alfabe alfabe = new Alfabe();
+            alfabe.harfler = "abcdefghijklmnopqrstuvwxyz";
+            Console.Write("Kredi karti no giriniz: ");
+            krediKarti = Console.ReadLine();
+            KrediKarti sonuc = new KrediKarti(alfabe, krediKarti);
+        }
+        static void Main(string[] args)
+        {
+            kart();
+            Console.ReadLine();
+        }
+    }
+}
